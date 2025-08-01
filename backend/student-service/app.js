@@ -4,11 +4,11 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 require('dotenv').config();
 
-const authRoutes = require('./routes/auth');
-const userRoutes = require('./routes/users');
+const studentRoutes = require('./routes/students');
+const registrationRoutes = require('./routes/registrations');
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3002;
 
 // Middleware
 app.use(helmet());
@@ -18,12 +18,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes);
+app.use('/api/students', studentRoutes);
+app.use('/api/registrations', registrationRoutes);
 
 // Health check
 app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'OK', service: 'user-service' });
+  res.status(200).json({ status: 'OK', service: 'student-service' });
 });
 
 // Error handling middleware
@@ -38,7 +38,7 @@ app.use('*', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`User service running on port ${PORT}`);
+  console.log(`Student service running on port ${PORT}`);
 });
 
-module.exports = app;
+module.exports = app; 

@@ -1,0 +1,53 @@
+{
+  "name": "gestion-entretiens",
+  "version": "1.0.0",
+  "description": "Système de gestion des entretiens pour forum d'entreprise",
+  "main": "index.js",
+  "scripts": {
+    "install:all": "npm run install:user && npm run install:student && npm run install:company && npm run install:committee && npm run install:interview",
+    "install:user": "cd backend/user-service && npm install",
+    "install:student": "cd backend/student-service && npm install",
+    "install:company": "cd backend/company-service && npm install",
+    "install:committee": "cd backend/committee-service && npm install",
+    "install:interview": "cd backend/interview-service && npm install",
+    "dev:all": "concurrently \"npm run dev:user\" \"npm run dev:student\" \"npm run dev:company\" \"npm run dev:committee\" \"npm run dev:interview\"",
+    "dev:user": "cd backend/user-service && npm run dev",
+    "dev:student": "cd backend/student-service && npm run dev",
+    "dev:company": "cd backend/company-service && npm run dev",
+    "dev:committee": "cd backend/committee-service && npm run dev",
+    "dev:interview": "cd backend/interview-service && npm run dev",
+    "migrate:all": "npm run migrate:user && npm run migrate:student",
+    "migrate:user": "cd backend/user-service && npm run db:migrate",
+    "migrate:student": "cd backend/student-service && npm run db:migrate",
+    "reset:all": "npm run reset:user && npm run reset:student",
+    "reset:user": "cd backend/user-service && npm run db:reset",
+    "reset:student": "cd backend/student-service && npm run db:reset",
+    "test:all": "npm run test:user && npm run test:student && npm run test:company && npm run test:committee && npm run test:interview",
+    "test:user": "cd backend/user-service && npm test",
+    "test:student": "cd backend/student-service && npm test",
+    "test:company": "cd backend/company-service && npm test",
+    "test:committee": "cd backend/committee-service && npm test",
+    "test:interview": "cd backend/interview-service && npm test",
+    "setup": "chmod +x install.sh && ./install.sh",
+    "start": "chmod +x start-services.sh && ./start-services.sh"
+  },
+  "keywords": [
+    "entretiens",
+    "forum",
+    "entreprise",
+    "microservices",
+    "nodejs",
+    "react",
+    "mysql",
+    "mongodb"
+  ],
+  "author": "ENSA Tétouan",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
+} 
