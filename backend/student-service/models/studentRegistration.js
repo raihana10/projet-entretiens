@@ -4,7 +4,11 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class StudentRegistration extends Model {
     static associate(models) {
-      // define associations here
+      // Define associations here
+      StudentRegistration.belongsTo(models.Student, {
+        foreignKey: 'studentId',
+        as: 'student'
+      });
     }
   }
 
@@ -46,7 +50,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     estimatedTime: {
       type: DataTypes.INTEGER, // in minutes
-      allowNull: true
+      allowNull: true,
+      defaultValue: 15
     },
     notes: {
       type: DataTypes.TEXT,
@@ -71,6 +76,9 @@ module.exports = (sequelize, DataTypes) => {
       },
       {
         fields: ['studentId']
+      },
+      {
+        fields: ['opportunityType']
       }
     ]
   });
