@@ -24,6 +24,18 @@ module.exports = {
       status: {
         type: Sequelize.STRING
       },
+      studentType: {
+      type: Sequelize.ENUM('ENSA', 'external'),
+      allowNull: true
+      },
+      phone: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      profileImage: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
