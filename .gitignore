@@ -1,0 +1,10 @@
+# Ignorer tous les fichiers .env
+.env
+*/.env
+
+# Autres fichiers ou dossiers à ignorer
+node_modules/
+dist/
+coverage/
+.env.local
+.env.*.local
