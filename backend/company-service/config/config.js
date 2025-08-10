@@ -1,13 +1,14 @@
 const config = {
   development: {
     database: {
-      host: process.env.DB_HOST || 'localhost',
-      port: process.env.DB_PORT || 5432,
-      username: process.env.DB_USERNAME || 'postgres',
-      password: process.env.DB_PASSWORD || 'password',
-      database: process.env.DB_NAME || 'company_service_dev',
-      dialect: 'postgres',
-      logging: false
+      uri: process.env.MONGODB_URI || 'mongodb://localhost:27017/company_service_dev',
+      options: {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        maxPoolSize: 10,
+        serverSelectionTimeoutMS: 5000,
+        socketTimeoutMS: 45000,
+      }
     },
     jwt: {
       secret: process.env.JWT_SECRET || 'your-secret-key',
@@ -17,13 +18,14 @@ const config = {
   },
   test: {
     database: {
-      host: process.env.DB_HOST || 'localhost',
-      port: process.env.DB_PORT || 5432,
-      username: process.env.DB_USERNAME || 'postgres',
-      password: process.env.DB_PASSWORD || 'password',
-      database: process.env.DB_NAME || 'company_service_test',
-      dialect: 'postgres',
-      logging: false
+      uri: process.env.MONGODB_URI || 'mongodb://localhost:27017/company_service_test',
+      options: {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        maxPoolSize: 5,
+        serverSelectionTimeoutMS: 5000,
+        socketTimeoutMS: 45000,
+      }
     },
     jwt: {
       secret: process.env.JWT_SECRET || 'test-secret-key',
@@ -33,13 +35,14 @@ const config = {
   },
   production: {
     database: {
-      host: process.env.DB_HOST,
-      port: process.env.DB_PORT || 5432,
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
-      dialect: 'postgres',
-      logging: false
+      uri: process.env.MONGODB_URI,
+      options: {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        maxPoolSize: 20,
+        serverSelectionTimeoutMS: 10000,
+        socketTimeoutMS: 45000,
+      }
     },
     jwt: {
       secret: process.env.JWT_SECRET,

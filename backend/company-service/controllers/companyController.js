@@ -1,4 +1,4 @@
-const Company = require('../models/Company');
+const { Company } = require('../models');
 
 // Get all companies
 const getAllCompanies = async (req, res) => {

@@ -1,43 +1,41 @@
-'use strict';
+const mongoose = require('mongoose');
+const config = require('../config/config.js');
 
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
-const process = require('process');
-const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require('../config/config.json')[env];
-const db = {};
+const dbConfig = config[env].database;
 
-let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
-}
-
-fs
-  .readdirSync(__dirname)
-  .filter(file => {
-    return (
-      file.indexOf('.') !== 0 &&
-      file !== basename &&
-      file.slice(-3) === '.js' &&
-      file.indexOf('.test.js') === -1
-    );
-  })
-  .forEach(file => {
-    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
-    db[model.name] = model;
-  });
-
-Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
+// Connection to MongoDB
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(dbConfig.uri, dbConfig.options);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+    
+    // Handle connection events
+    mongoose.connection.on('error', (err) => {
+      console.error('MongoDB connection error:', err);
+    });
+    
+    mongoose.connection.on('disconnected', () => {
+      console.log('MongoDB disconnected');
+    });
+    
+    process.on('SIGINT', async () => {
+      await mongoose.connection.close();
+      console.log('MongoDB connection closed through app termination');
+      process.exit(0);
+    });
+    
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    process.exit(1);
   }
-});
+};
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+// Import models
+const Interview = require('./Interview');
 
-module.exports = db; 
+module.exports = {
+  connectDB,
+  Interview,
+  mongoose
+}; 

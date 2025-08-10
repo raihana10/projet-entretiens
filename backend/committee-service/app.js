@@ -2,12 +2,13 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const mongoose = require('mongoose');
 const http = require('http');
 const socketIo = require('socket.io');
 require('dotenv').config();
 
+const { connectDB, Committee } = require('./models');
 const committeeRoutes = require('./routes/committee');
+const config = require('./config/config');
 
 const app = express();
 const server = http.createServer(app);
@@ -18,18 +19,11 @@ const io = socketIo(server, {
   }
 });
 
-const PORT = process.env.PORT || 3004;
+const env = process.env.NODE_ENV || 'development';
+const PORT = config[env].port;
 
-// MongoDB connection
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/committee_service';
-
-mongoose.connect(MONGODB_URI)
-  .then(() => {
-    console.log('Connected to MongoDB');
-  })
-  .catch((error) => {
-    console.error('MongoDB connection error:', error);
-  });
+// Initialize MongoDB connection
+connectDB();
 
 // Middleware
 app.use(helmet());
@@ -76,6 +70,7 @@ app.use('/api/committee', committeeRoutes);
 
 // Health check
 app.get('/health', (req, res) => {
+  const { mongoose } = require('./models');
   res.status(200).json({ 
     status: 'OK', 
     service: 'committee-service',

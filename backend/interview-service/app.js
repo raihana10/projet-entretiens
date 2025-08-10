@@ -2,14 +2,14 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const mongoose = require('mongoose');
 const http = require('http');
 const socketIo = require('socket.io');
 const cron = require('node-cron');
 require('dotenv').config();
 
+const { connectDB, Interview } = require('./models');
 const interviewRoutes = require('./routes/interviews');
-const Interview = require('./models/Interview');
+const config = require('./config/config');
 
 const app = express();
 const server = http.createServer(app);
@@ -20,18 +20,11 @@ const io = socketIo(server, {
   }
 });
 
-const PORT = process.env.PORT || 3005;
+const env = process.env.NODE_ENV || 'development';
+const PORT = config[env].port;
 
-// MongoDB connection
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/interview_service';
-
-mongoose.connect(MONGODB_URI)
-  .then(() => {
-    console.log('Connected to MongoDB');
-  })
-  .catch((error) => {
-    console.error('MongoDB connection error:', error);
-  });
+// Initialize MongoDB connection
+connectDB();
 
 // Middleware
 app.use(helmet());
@@ -127,6 +120,7 @@ app.use('/api/interviews', interviewRoutes);
 
 // Health check
 app.get('/health', (req, res) => {
+  const { mongoose } = require('./models');
   res.status(200).json({ 
     status: 'OK', 
     service: 'interview-service',
@@ -143,7 +137,7 @@ app.use((err, req, res, next) => {
 });
 
 // 404 handler
-app.use('*', (req, res) => {
+app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });
 });
 

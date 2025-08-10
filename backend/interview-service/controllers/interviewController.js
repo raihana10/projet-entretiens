@@ -1,4 +1,4 @@
-const Interview = require('../models/Interview');
+const { Interview } = require('../models');
 const PriorityService = require('../services/priorityService');
 
 // Get all interviews

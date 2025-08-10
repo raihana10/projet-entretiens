@@ -45,7 +45,7 @@ Ce document décrit la structure des services backend du projet d'entretiens.
 - **migrations/**: Migrations pour la table Committees
 - **models/**: Modèles Sequelize pour les comités
 - **routes/**: Routes pour l'API comités
-- **seeders/**: Données d'exemple pour les comités
+
 
 ### 5. Company Service (Port: 3005)
 **Gestion des entreprises**
@@ -56,7 +56,7 @@ Ce document décrit la structure des services backend du projet d'entretiens.
 - **migrations/**: Migrations pour la table Companies
 - **models/**: Modèles Sequelize pour les entreprises
 - **routes/**: Routes pour l'API entreprises
-- **seeders/**: Données d'exemple pour les entreprises
+
 
 ## Structure Commune des Dossiers
 

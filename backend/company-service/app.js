@@ -2,24 +2,18 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const mongoose = require('mongoose');
 require('dotenv').config();
 
+const { connectDB, Company } = require('./models');
 const companyRoutes = require('./routes/companies');
+const config = require('./config/config');
 
 const app = express();
-const PORT = process.env.PORT || 3003;
+const env = process.env.NODE_ENV || 'development';
+const PORT = config[env].port;
 
-// MongoDB connection
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/company_service';
-
-mongoose.connect(MONGODB_URI)
-  .then(() => {
-    console.log('Connected to MongoDB');
-  })
-  .catch((error) => {
-    console.error('MongoDB connection error:', error);
-  });
+// Initialize MongoDB connection
+connectDB();
 
 // Middleware
 app.use(helmet());
@@ -33,6 +27,7 @@ app.use('/api/companies', companyRoutes);
 
 // Health check
 app.get('/health', (req, res) => {
+  const { mongoose } = require('./models');
   res.status(200).json({ 
     status: 'OK', 
     service: 'company-service',

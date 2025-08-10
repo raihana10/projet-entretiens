@@ -1,4 +1,4 @@
-const Committee = require('../models/Committee');
+const { Committee } = require('../models');
 
 // Get all committee members
 const getAllCommitteeMembers = async (req, res) => {

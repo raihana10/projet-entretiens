@@ -10,10 +10,10 @@ module.exports = (sequelize, DataTypes) => {
         as: 'registrations'
       });
       
-      Student.belongsTo(models.User, {
+      /*Student.belongsTo(models.User, {
         foreignKey: 'userId',
         as: 'user'
-      });
+      });*/
     }
   }
 
