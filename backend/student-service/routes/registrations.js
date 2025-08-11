@@ -3,20 +3,28 @@ const router = express.Router();
 const studentController = require('../controllers/studentController');
 const { authenticateToken, requireRole } = require('../middlewares/auth');
 
-// All routes require authentication
+// Toutes les routes nécessitent une authentification
 router.use(authenticateToken);
 
-// Registration management routes (organizers only)
+/**
+ * Routes spécifiques d'abord
+ */
+
+// Registration par entreprise
+router.get('/company/:companyId', requireRole(['organizer', 'committee']), studentController.getRegistrationsByCompany);
+
+// Registration par statut
+router.get('/status/:status', requireRole(['organizer', 'committee']), studentController.getRegistrationsByStatus);
+
+/**
+ * Routes de gestion des inscriptions (organizers & committee)
+ */
 router.get('/', requireRole(['organizer', 'committee']), studentController.getAllRegistrations);
-router.get('/:id', requireRole(['organizer', 'committee']), studentController.getRegistrationById);
 router.post('/', requireRole(['student', 'organizer']), studentController.createStudentRegistration);
+
+// Routes avec ID (génériques → en dernier)
+router.get('/:id', requireRole(['organizer', 'committee']), studentController.getRegistrationById);
 router.put('/:id', requireRole(['organizer', 'committee']), studentController.updateRegistration);
 router.delete('/:id', requireRole(['organizer']), studentController.deleteRegistration);
 
-// Registration by company (organizers and committee)
-router.get('/company/:companyId', requireRole(['organizer', 'committee']), studentController.getRegistrationsByCompany);
-
-// Registration by status (organizers and committee)
-router.get('/status/:status', requireRole(['organizer', 'committee']), studentController.getRegistrationsByStatus);
-
-module.exports = router; 
+module.exports = router;

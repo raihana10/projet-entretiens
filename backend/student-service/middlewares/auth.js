@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
-const  axios  = require('axios');
+const axios = require('axios');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-jwt-key-for-student-service';
 
 // Middleware to verify JWT token
 const authenticateToken = async (req, res, next) => {
@@ -14,17 +14,14 @@ const authenticateToken = async (req, res, next) => {
     }
 
     const decoded = jwt.verify(token, JWT_SECRET);
-    const user = await User.findByPk(decoded.userId);
-
-    if (!user) {
-      return res.status(401).json({ error: 'User not found' });
-    }
-
-    if (user.status !== 'active') {
-      return res.status(403).json({ error: 'User account is not active' });
-    }
-
-    req.user = user;
+    
+    // Store decoded user info in request
+    req.user = {
+      id: decoded.userId,
+      role: decoded.role || 'student',
+      status: decoded.status || 'active'
+    };
+    
     next();
   } catch (error) {
     if (error.name === 'JsonWebTokenError') {

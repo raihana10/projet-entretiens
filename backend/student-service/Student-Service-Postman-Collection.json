@@ -1,0 +1,141 @@
+{
+  "info": {
+    "name": "Student Service",
+    "description": "Collection pour tester le service étudiant",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3002/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3002",
+          "path": ["health"]
+        }
+      }
+    },
+    {
+      "name": "Get All Students (Organizer/Committee)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGUiOiJvcmdhbml6ZXIiLCJzdGF0dXMiOiJhY3RpdmUiLCJpYXQiOjE3NTQ4NTY4NzEsImV4cCI6MTc1NDk0MzI3MX0.Yc3wfd5-GCkzg5lD5WWQSnj_vYtLi9_j1kg6TC312Vs",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3002/api/students",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3002",
+          "path": ["api", "students"]
+        }
+      }
+    },
+    {
+      "name": "Get Students by Type",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGUiOiJvcmdhbml6ZXIiLCJzdGF0dXMiOiJhY3RpdmUiLCJpYXQiOjE3NTQ4NTY4NzEsImV4cCI6MTc1NDk0MzI3MX0.Yc3wfd5-GCkzg5lD5WWQSnj_vYtLi9_j1kg6TC312Vs",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3002/api/students/type/engineering",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3002",
+          "path": ["api", "students", "type", "engineering"]
+        }
+      }
+    },
+    {
+      "name": "Create Student",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGUiOiJvcmdhbml6ZXIiLCJzdGF0dXMiOiJhY3RpdmUiLCJpYXQiOjE3NTQ4NTY4NzEsImV4cCI6MTc1NDk0MzI3MX0.Yc3wfd5-GCkzg5lD5WWQSnj_vYtLi9_j1kg6TC312Vs",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"studentType\": \"engineering\",\n  \"graduationYear\": 2025,\n  \"university\": \"Université de Test\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3002/api/students",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3002",
+          "path": ["api", "students"]
+        }
+      }
+    },
+    {
+      "name": "Get All Registrations",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGUiOiJvcmdhbml6ZXIiLCJzdGF0dXMiOiJhY3RpdmUiLCJpYXQiOjE3NTQ4NTY4NzEsImV4cCI6MTc1NDk0MzI3MX0.Yc3wfd5-GCkzg5lD5WWQSnj_vYtLi9_j1kg6TC312Vs",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3002/api/registrations",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3002",
+          "path": ["api", "registrations"]
+        }
+      }
+    },
+    {
+      "name": "Create Registration",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJzdHVkZW50Iiwic3RhdHVzIjoiYWN0aXZlIiwiaWF0IjoxNzU0ODU2ODcxLCJleHAiOjE3NTQ5NDMyNzF9.ttuOTxn6n46l7GYV7EeIlhKQ_hk82vErlg42umYQmrc",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"studentId\": 1,\n  \"companyId\": 1,\n  \"position\": \"Software Engineer Intern\",\n  \"status\": \"pending\",\n  \"preferredDate\": \"2024-02-15\",\n  \"notes\": \"Intéressé par le développement web\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3002/api/registrations",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3002",
+          "path": ["api", "registrations"]
+        }
+      }
+    }
+  ]
+} 
